@@ -15,6 +15,6 @@
 | 게시물 삭제 | /newsfeed/{id} | `delete` | 없음 | 없음 | `200` |
 | 팔로우 |/members/{sendMemberID}/status| `post`|없음|없음|`200`|
 |  팔로우 취소 |  /members/{memberID}/status/{statusID} | `Delete`  | 없음 | 없음 |`200`|
-| 친구 조회|/members/{memberID}/status| `Get`| 없음 |{"name":"String" .....}| `200` |
+| 친구 조회|/members/{memberID}/status| `Get`| 없음 |{"name":"String"} ...| `200` |
 | 좋아요 | /like | - | -|-|-|
 | 좋아요 삭제 | /like/{id} |-|-|-|-|

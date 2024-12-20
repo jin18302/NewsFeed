@@ -13,8 +13,8 @@
 | 게시물 조회 |  /newsfeed/{id} | `get` | 없음 | {"id":"Long", "title":"String", "content":"String", "CreateAt":"LocalDateTime", "UpdateAt":"LocalDateTime"} | `200` |
 | 게시물 수정 | /newsfeed/{id} | `put` | {"title":"String", "content":"String"}|{"title":"String", "content":"String", "CreateAt":"LocalDateTime", "UpdateAt":"LocalDateTime"} | `200` |
 | 게시물 삭제 | /newsfeed/{id} | `delete` | 없음 | 없음 | `200` |
-| 좋아요 | /like | - | -|-|-|
-| 좋아요 삭제 | /like/{id} |-|-|-|-|
 | 팔로우 |/members/{sendMemberID}/status| `post`|없음|없음|`200`|
 |  팔로우 취소 |  /members/{memberID}/status/{statusID} | `Delete`  | 없음 | 없음 |`200`|
 | 친구 조회|/members/{memberID}/status| `Get`| 없음 | 없음 |List(Status)| `200` |
+| 좋아요 | /like | - | -|-|-|
+| 좋아요 삭제 | /like/{id} |-|-|-|-|

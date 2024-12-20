@@ -15,8 +15,6 @@
 | 게시물 삭제 | /newsfeed/{id} | `delete` | 없음 | 없음 | 200 |
 | 좋아요 | like/ | - | -|-|200|
 | 좋아요 삭제 | like/{id} |-|-|201|
-|기능|api|url|body,query,parma|Request|Response|status code|Login|:---:|
-|단방향 관계 생성|members/{sendMemberID}/status| post|PathVailable(memberID),RequestBody{ReceiveID : 1}|String ReceiveID = 1|String="send request"|200|
-|양방향 관계 생성|members/{ReceivememberID}/status| patch|PathVailable(memberID),RequestBody{SendID : 2}|String SendID = 2|String="success"|200 |
+| 팔로우 |members/{sendMemberID}/status| post|없음|없음|200|
 |  팔로우 취소 | Delete | members/{memberID}/status/{statusID} | 없음 |200|
 | 친구 조회|members/{memberID}/status| Get| 없음 | 없음 |List(Status)| 200 |

@@ -1,5 +1,6 @@
 package NewsFeedProject.newsfeed.Service;
 
+import NewsFeedProject.newsfeed.dto.NewsFeedRequestDto;
 import NewsFeedProject.newsfeed.dto.NewsFeedResponseDto;
 import NewsFeedProject.newsfeed.entity.NewsFeed;
 import NewsFeedProject.newsfeed.repository.NewsFeedRepository;
@@ -55,5 +56,28 @@ public class NewsFeedService {
         NewsFeed findNewsFeed = newsFeedRepository.findByIdOrElseThrow(id);
 
         newsFeedRepository.delete(findNewsFeed);
+    }
+
+    public NewsFeedResponseDto update(Long id, NewsFeedRequestDto requestDto) {
+
+        NewsFeed newsFeed = newsFeedRepository.findByIdOrElseThrow(id);
+        newsFeed.updateNewsFeed(requestDto);
+        newsFeedRepository.save(newsFeed);
+
+        return new NewsFeedResponseDto(newsFeed.getId(), newsFeed.getTitle(), newsFeed.getContents());
+    }
+
+
+//    public NewsFeedResponseDto update(Long id, NewsFeedRequestDto requestDto) {
+//
+//        NewsFeed newsFeed = newsFeedRepository.findByIdOrElseThrow(id);
+//        newsFeed.updateNewsFeed(requestDto);
+//        newsFeedRepository.save(newsFeed);
+//
+//        return toDto(newsFeed);
+//    }
+
+    private NewsFeedResponseDto toDto(NewsFeed newsFeed) {
+        return NewsFeedResponseDto.toDto(newsFeed);
     }
 }

@@ -41,7 +41,18 @@ public class NewsFeedController {
         return new ResponseEntity<>(newsFeedResponseDto, HttpStatus.OK);
     }
 
-//    @PatchMapping
+    @PatchMapping("/{id}")
+    public ResponseEntity<NewsFeedResponseDto> update(@PathVariable Long id, @RequestBody NewsFeedRequestDto requestDto) {
+
+        NewsFeedResponseDto newsFeedResponseDto = newsFeedService.update(id, requestDto);
+
+        return new ResponseEntity<>(newsFeedResponseDto, HttpStatus.OK);
+    }
+
+//    public ResponseEntity<NewsFeedResponseDto> update(@PathVariable Long id, @RequestBody NewsFeedRequestDto requestDto) {
+//
+//        return new ResponseEntity<>(newsFeedService.update(id, requestDto), HttpStatus.OK);
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

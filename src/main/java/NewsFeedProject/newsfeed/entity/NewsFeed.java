@@ -1,5 +1,6 @@
 package NewsFeedProject.newsfeed.entity;
 
+import NewsFeedProject.newsfeed.dto.NewsFeedRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -39,7 +40,16 @@ public class NewsFeed {
         this.contents = contents;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void updateNewsFeed(NewsFeedRequestDto requestDto) {
+        if (requestDto.getTitle() != null) {
+            this.title = requestDto.getTitle();
+        }
+        if (requestDto.getContents() != null) {
+            this.contents = requestDto.getContents();
+        }
     }
+
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 }

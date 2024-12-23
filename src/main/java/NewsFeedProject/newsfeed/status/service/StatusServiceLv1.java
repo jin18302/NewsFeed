@@ -62,7 +62,7 @@ public class StatusServiceLv1 {
      * @return
      */
     private UserEntity findUserByReceiveId(StatausRequestDto dto) {
-        Optional<UserEntity> UserById = userRepository.findById(dto.getReceiveid());
+        Optional<UserEntity> UserById = userRepository.findById(dto.getUserId()); // 논리적으로는 Receive 가 맞지만, 물리적으로는 이렇게도 맞다.
 
         return UserById.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }

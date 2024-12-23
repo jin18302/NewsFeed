@@ -7,25 +7,25 @@ import lombok.Getter;
 @Getter
 public class StatausRequestDto {
 
-    private Long sendid;
+    private Long userId;
 
-    private Long receiveid;
+    private Long otherUserId;
 
     private StatusValue statusvalue;
 
 
-    public StatausRequestDto(Long sendid, Long receiveid) {
-        this.sendid = sendid;
-        this.receiveid = receiveid;
+    public StatausRequestDto(Long userId, Long otherUserId) {
+        this.userId = userId;
+        this.otherUserId = otherUserId;
     }
 
-    public StatausRequestDto(Long receiveid) {
-        this.receiveid = receiveid;
+    public StatausRequestDto(Long userId) {
+        this.userId = userId;
     }
 
-    public StatausRequestDto(Long sendid, Long receiveid, StatusValue statusvalue) {
-        this.sendid = sendid;
-        this.receiveid = receiveid;
+    public StatausRequestDto(Long userId, Long otherUserId, StatusValue statusvalue) {
+        this.userId = userId;
+        this.otherUserId = otherUserId;
         this.statusvalue = statusvalue;
     }
 

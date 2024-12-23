@@ -44,7 +44,7 @@ public class NewsFeedController {
 //    @PatchMapping
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         newsFeedService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

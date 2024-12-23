@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class StatusControllerLv2 {
 
-    private StatusServiceLv2 statusService;
+    private final StatusServiceLv2 statusService;
 
     @PostMapping
     public ResponseEntity<Void> createSingleStatus(@RequestBody StatausRequestDto dto) {

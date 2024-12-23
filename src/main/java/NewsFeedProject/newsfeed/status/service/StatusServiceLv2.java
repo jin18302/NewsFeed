@@ -22,8 +22,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class StatusServiceLv2 {
 
-    private StatusRepositoryLv2 statusRepository;
-    private UserRepository userRepository;
+    private final StatusRepositoryLv2 statusRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public Void createSingleStatus(StatausRequestDto dto) {

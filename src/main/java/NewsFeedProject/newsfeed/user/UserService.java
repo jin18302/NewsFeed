@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserResponseDto createUser(UserRequestDto dto) {
 

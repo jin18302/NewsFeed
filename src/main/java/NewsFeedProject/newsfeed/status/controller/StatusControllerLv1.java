@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class StatusControllerLv1 {
 
-    private StatusServiceLv1 statusServiceLv1;
+    private final StatusServiceLv1 statusServiceLv1;
 
     @PostMapping
     public ResponseEntity<Void> createSingleStatus(@RequestBody StatausRequestDto dto) {

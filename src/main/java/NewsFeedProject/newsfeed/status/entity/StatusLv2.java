@@ -10,7 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Entity
 @Table(name="status")
-public class Status {
+public class StatusLv2 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +25,24 @@ public class Status {
     @JoinColumn(name = "receive_user_id")
     private UserEntity receiveUser;
 
-    public Status() {
+    @Enumerated(EnumType.STRING) // ORDINAL 은 enum 의 순서를 저장
+    private StatusValue statusvalue;
+
+    public StatusLv2() {
     }
 
-    private Status(UserEntity sendUser, UserEntity receiveUser) {
+    private StatusLv2(UserEntity sendUser, UserEntity receiveUser) {
         this.sendUser = sendUser;
         this.receiveUser = receiveUser;
+        this.statusvalue = StatusValue.stay;
     }
 
-    public static Status createStatus(UserEntity sendUser, UserEntity receiveUser) {
+    public static StatusLv2 createStatus(UserEntity sendUser, UserEntity receiveUser) {
 
-        return new Status(sendUser,receiveUser);
+        return new StatusLv2(sendUser,receiveUser);
+    }
+
+    public void setStatusvalue(StatusValue statusvalue) {
+        this.statusvalue = statusvalue;
     }
 }

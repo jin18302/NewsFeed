@@ -2,8 +2,8 @@ package NewsFeedProject.newsfeed.status.service;
 
 import NewsFeedProject.newsfeed.status.dto.StatausRequestDto;
 import NewsFeedProject.newsfeed.status.dto.StatusResponseDto;
-import NewsFeedProject.newsfeed.status.entity.Status;
-import NewsFeedProject.newsfeed.status.repository.StatusRepository;
+import NewsFeedProject.newsfeed.status.entity.StatusLv1;
+import NewsFeedProject.newsfeed.status.repository.StatusRepositoryLv1;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,14 +16,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class StatusServiceLv1 {
 
-    private StatusRepository statusRepository;
+    private StatusRepositoryLv1 statusRepositoryLv1;
 
 
     public StatusResponseDto createSingleStatus(StatausRequestDto dto) {
 
-        Status newStatus = Status.createStatus(dto.getSendUser(), dto.getSendUser());
+        StatusLv1 newStatusLv1 = StatusLv1.createStatus(dto.getSendUser(), dto.getSendUser());
 
-        statusRepository.save(newStatus);
+        statusRepositoryLv1.save(newStatusLv1);
 
         StatusResponseDto statusResponseDto = new StatusResponseDto(dto.getSendUser(), dto.getSendUser());
 
@@ -32,11 +32,11 @@ public class StatusServiceLv1 {
 
     public Void deleteStatus(StatausRequestDto dto) {
 
-        Optional<Status> byReceiveUserId = statusRepository.findBySendUserAndReceiveUser(dto.getSendUser(),dto.getReceiveUser());
+        Optional<StatusLv1> byReceiveUserId = statusRepositoryLv1.findBySendUserAndReceiveUser(dto.getSendUser(),dto.getReceiveUser());
 
-        Status findStatus = byReceiveUserId.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        StatusLv1 findStatusLv1 = byReceiveUserId.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        statusRepository.delete(findStatus);
+        statusRepositoryLv1.delete(findStatusLv1);
 
         return null;
     }

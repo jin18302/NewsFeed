@@ -30,6 +30,7 @@ public class MemberService {
         if(memberRepository.findByEmail(email).isPresent()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"이미 사용중인 이메일 입니다");
         }
+
         Member member = new Member(name, email, password, birthdate, nickname, comment);
 
         Member saveMember = memberRepository.save(member);

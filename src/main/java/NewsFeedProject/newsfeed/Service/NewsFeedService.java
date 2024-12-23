@@ -65,6 +65,7 @@ public class NewsFeedService {
         newsFeedRepository.save(newsFeed);
 
         return new NewsFeedResponseDto(newsFeed.getId(), newsFeed.getTitle(), newsFeed.getContents());
+
     }
 
 
@@ -77,7 +78,7 @@ public class NewsFeedService {
 //        return toDto(newsFeed);
 //    }
 
-    private NewsFeedResponseDto toDto(NewsFeed newsFeed) {
-        return NewsFeedResponseDto.toDto(newsFeed);
-    }
+//    private NewsFeedResponseDto toDto(NewsFeed newsFeed) {
+//        return NewsFeedResponseDto.toDto(newsFeed);
+//    }
 }

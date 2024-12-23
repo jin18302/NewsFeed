@@ -26,7 +26,7 @@ public class NewsFeedService {
 
         NewsFeed saveNewsFeed = newsFeedRepository.save(newsFeed);
 
-        return new NewsFeedResponseDto(saveNewsFeed.getId(), saveNewsFeed.getTitle(), saveNewsFeed.getContents());
+        return new NewsFeedResponseDto(saveNewsFeed.getId(), saveNewsFeed.getTitle(), saveNewsFeed.getContents(), saveNewsFeed.getCreateAt(), saveNewsFeed.getModifiedAt());
 
     }
 
@@ -48,7 +48,7 @@ public class NewsFeedService {
         }
         NewsFeed findNewsFeed = optionalNewsFeed.get();
 
-        return new NewsFeedResponseDto(findNewsFeed.getId(), findNewsFeed.getTitle(), findNewsFeed.getContents());
+        return new NewsFeedResponseDto(findNewsFeed.getId(), findNewsFeed.getTitle(), findNewsFeed.getContents(), findNewsFeed.getCreateAt(), findNewsFeed.getModifiedAt());
 
     }
 
@@ -64,7 +64,7 @@ public class NewsFeedService {
         newsFeed.updateNewsFeed(requestDto);
         newsFeedRepository.save(newsFeed);
 
-        return new NewsFeedResponseDto(newsFeed.getId(), newsFeed.getTitle(), newsFeed.getContents());
+        return new NewsFeedResponseDto(newsFeed.getId(), newsFeed.getTitle(), newsFeed.getContents(), newsFeed.getCreateAt(), newsFeed.getModifiedAt());
 
     }
 

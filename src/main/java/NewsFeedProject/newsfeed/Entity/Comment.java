@@ -30,14 +30,18 @@ public class Comment {
     @LastModifiedDate
     private LocalDateTime updateAt;
 
-//    @ManyToOne
-//    private NewsFeed newsFeedId;
-//
-//    @ManyToOne
-//    private Member memberId;
+    @ManyToOne
+    @JoinColumn(name = "newsfeed_id")
+    private NewsFeed newsFeed;
 
-    public Comment(String content){
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    public Comment( String content, Member member, NewsFeed newsFeed){
         this.content = content;
+        this.member = member;
+        this.newsFeed = newsFeed;
     }
 
     public void update(CommentUpdateRequest request){

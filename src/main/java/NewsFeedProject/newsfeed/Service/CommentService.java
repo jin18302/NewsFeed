@@ -10,42 +10,51 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
 
-    private final CommentRepository repository;
+    private final CommentRepository commentRepository;
 
-    public CommentResponse saveComment(CommentAddRequest request){
-       Comment comment = repository.save(request.toEntity());
-       return new CommentResponse(comment);
+    public CommentResponse saveComment(CommentAddRequest request) {
+        Optional<Member> findMember = memberRepository.findById(request.getMemberId());
+        findMember.orElseThrow(NullPointerException::new);
+        Member member = findMember.get();
+
+        Optional<NewsFeed> findNewsFeed = newsFeedRepository.findByid(request.getNewsfeedId());
+        findNewsFeed.orElseThrow(NullPointerException::new);
+
+        NewsFeed newsFeed = findNewsFeed.get();
+
+        Comment comment = new Comment(request.getContent(), member, newsFeed);
+
+        Comment savedComment = commentRepository.save(comment);
+
+        return new CommentResponse(savedComment);
+
     }
 
-    public CommentResponse updateComment(Long id,CommentUpdateRequest request){
-       Optional<Comment> findComment = repository.findById(id);// id로 찾은 객체
+    public CommentResponse updateComment(Long id, CommentUpdateRequest request) {
+        Optional<Comment> findComment = commentRepository.findById(id);
+        findComment.orElseThrow(NullPointerException::new);
 
-       if(findComment.isEmpty()){
-           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No such comment found");
-       }
-       Comment comment = findComment.get();//비어있지 않으면 꺼낸다
-       comment.update(request);
 
-      Comment c = repository.save(comment);
+        Comment comment = findComment.get();
+        comment.update(request);
+
+        Comment c = commentRepository.save(comment);
 
         return new CommentResponse(c);
     }
 
 
-    public void delete(Long id){
-        Optional<Comment> findComment = repository.findById(id);
+    public void delete(Long id) {
+        Optional<Comment> findComment = commentRepository.findById(id);
 
-        if(findComment.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No such comment found");
-        }
+        findComment.orElseThrow(NullPointerException::new);
 
-        repository.deleteById(id);
+        commentRepository.deleteById(id);
     }
 }

@@ -9,7 +9,8 @@ import lombok.Setter;
 public class CommentAddRequest {
     private String content;
 
-    public Comment toEntity(){
-       return new Comment(content);
-    }
+    private Long memberId;
+
+    private Long newsfeedId;
+
 }

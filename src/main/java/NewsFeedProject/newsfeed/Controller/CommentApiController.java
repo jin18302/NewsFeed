@@ -19,22 +19,22 @@ public class CommentApiController {
 
     private final CommentService service;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<CommentResponse> addComment(@RequestBody CommentAddRequest request){
       CommentResponse response =  service.saveComment(request);
 
       return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-   @PatchMapping ("/{id}")
-    public ResponseEntity<CommentResponse> updateComment(@PathVariable Long id, @RequestBody  CommentUpdateRequest request){
+   @PatchMapping ("/{commentid}")
+    public ResponseEntity<CommentResponse> updateComment(@PathVariable(name = "id") Long id, @RequestBody  CommentUpdateRequest request){
        CommentResponse response = service.updateComment(id, request);
 
        return ResponseEntity.status(HttpStatus.OK).body(response);
    }
 
-   @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long id){
+   @DeleteMapping("/{commentid}")
+    public ResponseEntity<Void> deleteComment(@PathVariable(name = "id") Long id){
         service.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
    }

@@ -4,11 +4,14 @@ package NewsFeedProject.newsfeed.status.controller;
 import NewsFeedProject.newsfeed.status.dto.StatausRequestDto;
 import NewsFeedProject.newsfeed.status.dto.StatusResponseDto;
 import NewsFeedProject.newsfeed.status.service.StatusServiceLv2;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("lv2/statuses")
@@ -18,34 +21,61 @@ public class StatusControllerLv2 {
     private final StatusServiceLv2 statusService;
 
     @PostMapping
-    public ResponseEntity<Void> createSingleStatus(@RequestBody StatausRequestDto dto) {
+    public ResponseEntity<Void> createSingleStatus(HttpServletRequest request,
+                                                   @RequestBody StatausRequestDto dto) {
 
-        return ResponseEntity.ok(statusService.createSingleStatus(dto));
+        HttpSession session = request.getSession();
+        Map attribute = (Map) session.getAttribute("session");
+        String UserOfEmail = (String)attribute.get("email");
+
+        return ResponseEntity.ok(statusService.createSingleStatus(dto,UserOfEmail));
     }
 
     @PatchMapping ("/{sendUserId}")
-    public ResponseEntity<StatusResponseDto> setPairStatus(@RequestBody StatausRequestDto dto) {
+    public ResponseEntity<StatusResponseDto> setPairStatus(HttpServletRequest request,
+                                                            @RequestBody StatausRequestDto dto) {
 
-        return ResponseEntity.ok(statusService.setPairStatus(dto));
+        HttpSession session = request.getSession();
+        Map attribute = (Map) session.getAttribute("session");
+        String UserOfEmail = (String)attribute.get("email");
+
+        return ResponseEntity.ok(statusService.setPairStatus(dto,UserOfEmail));
     }
 
     @GetMapping
-    public ResponseEntity<List<StatusResponseDto>> findAllStatus(@RequestBody StatausRequestDto dto) {
+    public ResponseEntity<List<StatusResponseDto>> findAllStatus(HttpServletRequest request) {
 
-        return ResponseEntity.ok(statusService.findAllStatus(dto));
+        HttpSession session = request.getSession();
+        Map attribute = (Map) session.getAttribute("session");
+        String UserOfEmail = (String)attribute.get("email");
+
+
+        return ResponseEntity.ok(statusService.findAllStatus(UserOfEmail));
     }
 
     @GetMapping("/{receiveUserId}")
-    public ResponseEntity<StatusResponseDto> findByEmailStatus(@PathVariable("receiveUserId") Long id,
-                                                               @RequestBody StatausRequestDto dto) {
+    public ResponseEntity<StatusResponseDto> findByEmailStatus(HttpServletRequest request,
+                                                               @PathVariable("receiveUserId") Long id) {
 
-        return ResponseEntity.ok(statusService.findByEmailStatus(dto,id));
+
+        HttpSession session = request.getSession();
+        Map attribute = (Map) session.getAttribute("session");
+        String UserOfEmail = (String)attribute.get("email");
+
+        return ResponseEntity.ok(statusService.findByEmailStatus(id,UserOfEmail));
     }
 
     @DeleteMapping("/{receiveUserId}")
-    public ResponseEntity<Void> deleteStatus(@RequestBody StatausRequestDto dto) {
+    public ResponseEntity<Void> deleteStatus(HttpServletRequest request,
+                                             @RequestBody StatausRequestDto dto) {
 
-        statusService.deleteStatus(dto);
+
+        HttpSession session = request.getSession();
+        Map attribute = (Map) session.getAttribute("session");
+        String UserOfEmail = (String)attribute.get("email");
+
+
+        statusService.deleteStatus(dto,UserOfEmail);
 
         return ResponseEntity.noContent().build();
     }

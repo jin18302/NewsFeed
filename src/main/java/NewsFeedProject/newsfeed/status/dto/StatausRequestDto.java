@@ -19,8 +19,8 @@ public class StatausRequestDto {
         this.receiveid = receiveid;
     }
 
-    public StatausRequestDto(Long sendid) {
-        this.sendid = sendid;
+    public StatausRequestDto(Long receiveid) {
+        this.receiveid = receiveid;
     }
 
     public StatausRequestDto(Long sendid, Long receiveid, StatusValue statusvalue) {

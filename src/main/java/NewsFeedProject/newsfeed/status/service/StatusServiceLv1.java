@@ -23,41 +23,47 @@ public class StatusServiceLv1 {
     private final UserRepository userRepository;
 
     @Transactional
-    public Void createSingleStatus(StatausRequestDto dto) {
+    public Void createSingleStatus(StatausRequestDto dto, String sendUserOfEmail) {
 
-        UserEntity sendUserById = findUserBySendId(dto);
+        Optional<UserEntity> byEmail = userRepository.findByEmail(sendUserOfEmail);
+        // byEmail.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)); // 생략 - 로그인 기능에 포함
+
+        UserEntity userEntity = byEmail.get();
         UserEntity receivceUserById = findUserByReceiveId(dto);
 
-        StatusLv1 newStatusLv1 = StatusLv1.createStatus(sendUserById, receivceUserById);
+        StatusLv1 newStatusLv1 = StatusLv1.createStatus(userEntity, receivceUserById);
 
         statusRepositoryLv1.save(newStatusLv1);
 
         return null;
     }
 
-    private UserEntity findUserBySendId(StatausRequestDto dto) {
-        Optional<UserEntity> UserById = userRepository.findById(dto.getSendid());
-
-        return UserById.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-    private UserEntity findUserByReceiveId(StatausRequestDto dto) {
-        Optional<UserEntity> UserById = userRepository.findById(dto.getReceiveid());
-
-        return UserById.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
     @Transactional
-    public Void deleteStatus(StatausRequestDto dto) {
+    public Void deleteStatus(StatausRequestDto dto, String sendUserOfEmail) {
 
-        UserEntity sendUserById = findUserBySendId(dto);
+        Optional<UserEntity> byEmail = userRepository.findByEmail(sendUserOfEmail);
+        // byEmail.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)); // 생략 - 로그인 기능에 포함
+
+        UserEntity userEntity = byEmail.get();
         UserEntity receivceUserById = findUserByReceiveId(dto);
 
-        Optional<StatusLv1> byReceiveUserId = statusRepositoryLv1.findBySendUserAndReceiveUser(sendUserById,receivceUserById);
+        Optional<StatusLv1> byReceiveUserId = statusRepositoryLv1.findBySendUserAndReceiveUser(userEntity,receivceUserById);
 
         StatusLv1 findStatusLv1 = byReceiveUserId.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         statusRepositoryLv1.delete(findStatusLv1);
 
         return null;
+    }
+
+    /**
+     *
+     * @param dto
+     * @return
+     */
+    private UserEntity findUserByReceiveId(StatausRequestDto dto) {
+        Optional<UserEntity> UserById = userRepository.findById(dto.getReceiveid());
+
+        return UserById.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

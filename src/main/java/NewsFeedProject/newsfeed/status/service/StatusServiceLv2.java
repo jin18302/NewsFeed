@@ -26,28 +26,22 @@ public class StatusServiceLv2 {
     private final UserRepository userRepository;
 
     @Transactional
-    public Void createSingleStatus(StatausRequestDto dto) {
+    public Void createSingleStatus(StatausRequestDto dto, String UserOfEmail) {
 
-        UserEntity sendUserById = findUserBySendId(dto);
+
+        Optional<UserEntity> byEmail = userRepository.findByEmail(UserOfEmail);
+        // byEmail.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)); // 생략 - 로그인 기능에 포함
+
+        UserEntity userEntity = byEmail.get();
         UserEntity receivceUserById = findUserByReceiveId(dto);
 
-        StatusLv2 newStatusLv2 = StatusLv2.createStatus(sendUserById, receivceUserById);
+        StatusLv2 newStatusLv2 = StatusLv2.createStatus(userEntity, receivceUserById);
 
         statusRepository.save(newStatusLv2);
 
         return null;
     }
 
-    /**
-     *
-     * @param dto
-     * @return
-     */
-    private UserEntity findUserBySendId(StatausRequestDto dto) {
-        Optional<UserEntity> UserById = userRepository.findById(dto.getSendid());
-
-        return UserById.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
 
     /**
      *
@@ -61,28 +55,37 @@ public class StatusServiceLv2 {
     }
 
     @Transactional
-    public StatusResponseDto setPairStatus(StatausRequestDto dto) {
+    public StatusResponseDto setPairStatus(StatausRequestDto dto, String UserOfEmail) { // 고칠부분
 
-        UserEntity sendUserById = findUserBySendId(dto);
+        // 헛갈리니 주위!
+        // 이게 recevice 인거임
+        Optional<UserEntity> byEmail = userRepository.findByEmail(UserOfEmail);
+        // byEmail.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)); // 생략 - 로그인 기능에 포함
+
+        UserEntity userEntity = byEmail.get();
+
+        // 이게 send 가 되는거 // requestDto 의 필드명을 바꿔야할듯 id 를 빼오자? 엄청 헛갈림
         UserEntity receivceUserById = findUserByReceiveId(dto);
 
-
-        Optional<StatusLv2> bySendUserAndReceiveUser = statusRepository.findBySendUserAndReceiveUser(sendUserById ,receivceUserById);
+        Optional<StatusLv2> bySendUserAndReceiveUser = statusRepository.findBySendUserAndReceiveUser(userEntity ,receivceUserById);
 
         StatusLv2 findStatusLv2 = bySendUserAndReceiveUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         findStatusLv2.setStatusvalue(dto.getStatusvalue());
 
-        return new StatusResponseDto(sendUserById,receivceUserById,findStatusLv2.getStatusvalue());
+        return new StatusResponseDto(userEntity,receivceUserById,findStatusLv2.getStatusvalue());
     }
 
     @Transactional
-    public Void deleteStatus(StatausRequestDto dto) {
+    public Void deleteStatus(StatausRequestDto dto, String UserOfEmail) {
 
-        UserEntity sendUserById = findUserBySendId(dto);
+        Optional<UserEntity> byEmail = userRepository.findByEmail(UserOfEmail);
+        // byEmail.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)); // 생략 - 로그인 기능에 포함
+
+        UserEntity userEntity = byEmail.get();
         UserEntity receivceUserById = findUserByReceiveId(dto);
 
-        Optional<StatusLv2> byReceiveUserId = statusRepository.findBySendUserAndReceiveUser(sendUserById ,receivceUserById);
+        Optional<StatusLv2> byReceiveUserId = statusRepository.findBySendUserAndReceiveUser(userEntity ,receivceUserById);
 
         StatusLv2 findStatusLv2 = byReceiveUserId.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -92,13 +95,16 @@ public class StatusServiceLv2 {
     }
 
     @Transactional
-    public List<StatusResponseDto> findAllStatus(StatausRequestDto dto) {
+    public List<StatusResponseDto> findAllStatus(String UserOfEmail) {
 
         List<StatusResponseDto> statusList = new ArrayList<>();
 
-        UserEntity sendUserById = findUserBySendId(dto);
+        Optional<UserEntity> byEmail = userRepository.findByEmail(UserOfEmail);
+        // byEmail.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)); // 생략 - 로그인 기능에 포함
 
-        List<StatusLv2> bySendUser = statusRepository.findBySendUser(sendUserById);
+        UserEntity userEntity = byEmail.get();
+
+        List<StatusLv2> bySendUser = statusRepository.findBySendUser(userEntity);
 
         for(StatusLv2 status : bySendUser) {
             if(status.getStatusvalue().equals(StatusValue.acceptance)) {
@@ -110,17 +116,20 @@ public class StatusServiceLv2 {
     }
 
     @Transactional
-    public StatusResponseDto findByEmailStatus(StatausRequestDto dto,Long receiveId) {
+    public StatusResponseDto findByEmailStatus(Long receiveId, String UserOfEmail) {
 
         //
-        UserEntity sendUserById = findUserBySendId(dto);
+        Optional<UserEntity> byEmail = userRepository.findByEmail(UserOfEmail);
+        // byEmail.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)); // 생략 - 로그인 기능에 포함
+
+        UserEntity userEntity = byEmail.get();
 
         Optional<UserEntity> receivceUserByIdUserById = userRepository.findById(receiveId);
 
         UserEntity receivceByUserEntity = receivceUserByIdUserById.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //
-        Optional<StatusLv2> statusByUserId = statusRepository.findBySendUserAndReceiveUser(sendUserById ,receivceByUserEntity);
+        Optional<StatusLv2> statusByUserId = statusRepository.findBySendUserAndReceiveUser(userEntity ,receivceByUserEntity);
 
         StatusLv2 statusLv2 = statusByUserId.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 

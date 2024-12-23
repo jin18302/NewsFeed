@@ -5,6 +5,8 @@ import NewsFeedProject.newsfeed.entity.NewsFeed;
 import NewsFeedProject.newsfeed.repository.NewsFeedRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class NewsFeedService {
 
@@ -21,5 +23,13 @@ public class NewsFeedService {
         NewsFeed saveNewsFeed = newsFeedRepository.save(newsFeed);
 
         return new NewsFeedResponseDto(saveNewsFeed.getId(), saveNewsFeed.getTitle(), saveNewsFeed.getContents());
+    }
+
+    public List<NewsFeedResponseDto> findAll() {
+
+        return newsFeedRepository.findAll()
+                .stream()
+                .map(NewsFeedResponseDto::toDto)
+                .toList();
     }
 }

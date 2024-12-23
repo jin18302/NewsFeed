@@ -6,10 +6,9 @@ import NewsFeedProject.newsfeed.dto.NewsFeedResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/newsfeeds")
@@ -24,5 +23,13 @@ public class NewsFeedController {
         NewsFeedResponseDto newsFeedResponseDto = newsFeedService.save(requestDto.getTitle(), requestDto.getContents());
 
         return new ResponseEntity<>(newsFeedResponseDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<NewsFeedResponseDto>> findAll() {
+
+        List<NewsFeedResponseDto> newsFeedResponseDtoList = newsFeedService.findAll();
+
+        return new ResponseEntity<>(newsFeedResponseDtoList, HttpStatus.OK);
     }
 }

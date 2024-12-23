@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("lv2/statuses")
 @AllArgsConstructor
@@ -22,6 +24,18 @@ public class StatusControllerLv2 {
     }
 
     @PatchMapping ("/{sendUserId}")
+    public ResponseEntity<StatusResponseDto> setPairStatus(@RequestBody StatausRequestDto dto) {
+
+        return ResponseEntity.ok(statusService.setPairStatus(dto));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<StatusResponseDto>> setPairStatus(@RequestBody StatausRequestDto dto) {
+
+        return ResponseEntity.ok(statusService.setPairStatus(dto));
+    }
+
+    @GetMapping ("/{sendUserId}")
     public ResponseEntity<StatusResponseDto> setPairStatus(@RequestBody StatausRequestDto dto) {
 
         return ResponseEntity.ok(statusService.setPairStatus(dto));

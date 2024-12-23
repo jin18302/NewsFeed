@@ -40,4 +40,13 @@ public class NewsFeedController {
 
         return new ResponseEntity<>(newsFeedResponseDto, HttpStatus.OK);
     }
+
+//    @PatchMapping
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(Long id) {
+        newsFeedService.delete(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

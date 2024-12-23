@@ -3,6 +3,8 @@ package NewsFeedProject.newsfeed.dto;
 import NewsFeedProject.newsfeed.entity.NewsFeed;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class NewsFeedResponseDto {
 

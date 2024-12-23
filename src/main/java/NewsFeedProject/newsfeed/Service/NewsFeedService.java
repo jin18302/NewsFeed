@@ -50,4 +50,10 @@ public class NewsFeedService {
         return new NewsFeedResponseDto(findNewsFeed.getId(), findNewsFeed.getTitle(), findNewsFeed.getContents());
 
     }
+
+    public void delete(Long id) {
+        NewsFeed findNewsFeed = newsFeedRepository.findByIdOrElseThrow(id);
+
+        newsFeedRepository.delete(findNewsFeed);
+    }
 }

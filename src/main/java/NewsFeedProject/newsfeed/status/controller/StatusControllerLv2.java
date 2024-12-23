@@ -30,15 +30,16 @@ public class StatusControllerLv2 {
     }
 
     @GetMapping
-    public ResponseEntity<List<StatusResponseDto>> setPairStatus(@RequestBody StatausRequestDto dto) {
+    public ResponseEntity<List<StatusResponseDto>> findAllStatus(@RequestBody StatausRequestDto dto) {
 
-        return ResponseEntity.ok(statusService.setPairStatus(dto));
+        return ResponseEntity.ok(statusService.findAllStatus(dto));
     }
 
-    @GetMapping ("/{sendUserId}")
-    public ResponseEntity<StatusResponseDto> setPairStatus(@RequestBody StatausRequestDto dto) {
+    @GetMapping("/{receiveUserId}")
+    public ResponseEntity<StatusResponseDto> findByEmailStatus(@PathVariable("receiveUserId") Long id,
+                                                               @RequestBody StatausRequestDto dto) {
 
-        return ResponseEntity.ok(statusService.setPairStatus(dto));
+        return ResponseEntity.ok(statusService.findByEmailStatus(dto,id));
     }
 
     @DeleteMapping("/{receiveUserId}")

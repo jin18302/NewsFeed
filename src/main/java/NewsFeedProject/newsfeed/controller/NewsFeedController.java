@@ -32,4 +32,12 @@ public class NewsFeedController {
 
         return new ResponseEntity<>(newsFeedResponseDtoList, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<NewsFeedResponseDto> findById(@PathVariable Long id) {
+
+        NewsFeedResponseDto newsFeedResponseDto = newsFeedService.findById(id);
+
+        return new ResponseEntity<>(newsFeedResponseDto, HttpStatus.OK);
+    }
 }

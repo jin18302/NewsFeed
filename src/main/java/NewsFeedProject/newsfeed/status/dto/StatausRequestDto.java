@@ -8,21 +8,21 @@ import lombok.Getter;
 @Getter
 public class StatausRequestDto {
 
-    private UserEntity sendUser;
+    private Long sendid;
 
-    private UserEntity receiveUser;
+    private Long receiveid;
 
     private StatusValue statusvalue;
 
 
-    public StatausRequestDto(UserEntity sendUser, UserEntity receiveUser) {
-        this.sendUser = sendUser;
-        this.receiveUser = receiveUser;
+    public StatausRequestDto(Long sendid, Long receiveid) {
+        this.sendid = sendid;
+        this.receiveid = receiveid;
     }
 
-    public StatausRequestDto(UserEntity sendUser, UserEntity receiveUser, StatusValue statusvalue) {
-        this.sendUser = sendUser;
-        this.receiveUser = receiveUser;
+    public StatausRequestDto(Long sendid, Long receiveid, StatusValue statusvalue) {
+        this.sendid = sendid;
+        this.receiveid = receiveid;
         this.statusvalue = statusvalue;
     }
 

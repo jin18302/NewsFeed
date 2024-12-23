@@ -9,14 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/statuses")
+@RequestMapping("lv1/statuses")
 @AllArgsConstructor
 public class StatusControllerLv1 {
 
     private StatusServiceLv1 statusServiceLv1;
 
     @PostMapping
-    public ResponseEntity<StatusResponseDto> createSingleStatus(@RequestBody StatausRequestDto dto) {
+    public ResponseEntity<Void> createSingleStatus(@RequestBody StatausRequestDto dto) {
 
         return ResponseEntity.ok(statusServiceLv1.createSingleStatus(dto));
     }

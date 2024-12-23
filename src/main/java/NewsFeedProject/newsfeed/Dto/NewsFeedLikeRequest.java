@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public class NewsFeedLikeRequest {
-    private String memberId;
-    private String newsfeedId;
+    private Long memberId;
+    private Long newsfeedId;
 
     public NewsFeedLike toEntity(){
         return new NewsFeedLike(this.memberId, this.newsfeedId);

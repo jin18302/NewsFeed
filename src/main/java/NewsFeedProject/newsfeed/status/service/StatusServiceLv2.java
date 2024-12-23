@@ -125,6 +125,10 @@ public class StatusServiceLv2 {
         StatusLv2 statusLv2 = statusByUserId.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         //
-        return new StatusResponseDto(statusLv2.getSendUser(),statusLv2.getReceiveUser(),statusLv2.getStatusvalue());
+        if(statusLv2.getStatusvalue().equals(StatusValue.acceptance)) {
+            return new StatusResponseDto(statusLv2.getSendUser(),statusLv2.getReceiveUser(),statusLv2.getStatusvalue());
+         } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -2,7 +2,6 @@ package NewsFeedProject.newsfeed.status.dto;
 
 
 import NewsFeedProject.newsfeed.status.entity.StatusValue;
-import NewsFeedProject.newsfeed.user.UserEntity;
 import lombok.Getter;
 
 @Getter

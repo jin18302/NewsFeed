@@ -26,6 +26,7 @@ public class NewsFeedService {
         NewsFeed saveNewsFeed = newsFeedRepository.save(newsFeed);
 
         return new NewsFeedResponseDto(saveNewsFeed.getId(), saveNewsFeed.getTitle(), saveNewsFeed.getContents());
+
     }
 
     public List<NewsFeedResponseDto> findAll() {
@@ -34,6 +35,7 @@ public class NewsFeedService {
                 .stream()
                 .map(NewsFeedResponseDto::toDto)
                 .toList();
+
     }
 
     public NewsFeedResponseDto findById(Long id) {
@@ -46,5 +48,6 @@ public class NewsFeedService {
         NewsFeed findNewsFeed = optionalNewsFeed.get();
 
         return new NewsFeedResponseDto(findNewsFeed.getId(), findNewsFeed.getTitle(), findNewsFeed.getContents());
+
     }
 }

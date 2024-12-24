@@ -5,9 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
-@Entity
 @Getter
+@Entity
+@Table(name = "newfeedlikes")
 @NoArgsConstructor
 public class NewsFeedLike {
 

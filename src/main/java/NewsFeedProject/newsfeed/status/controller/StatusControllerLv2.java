@@ -53,6 +53,18 @@ public class StatusControllerLv2 {
         return ResponseEntity.ok(statusService.findAllStatus(UserOfEmail));
     }
 
+    // 수락한 친구 모두 조회
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<StatusResponseDto>> findAcceptanceStatus(HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Map attribute = (Map) session.getAttribute("session");
+        String UserOfEmail = (String)attribute.get("email");
+
+
+        return ResponseEntity.ok(statusService.findAcceptanceStatus(UserOfEmail));
+    }
+
     @GetMapping("/{receiveUserId}")
     public ResponseEntity<StatusResponseDto> findByEmailStatus(HttpServletRequest request,
                                                                @PathVariable("receiveUserId") Long id) {

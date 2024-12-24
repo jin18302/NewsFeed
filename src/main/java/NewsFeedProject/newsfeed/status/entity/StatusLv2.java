@@ -5,11 +5,13 @@ import NewsFeedProject.newsfeed.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
 @Entity
 @Table(name="status")
+@ToString
 public class StatusLv2 {
 
     @Id

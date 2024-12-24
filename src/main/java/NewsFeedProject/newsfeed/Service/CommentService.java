@@ -17,14 +17,16 @@ import java.util.Optional;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final MemberRepository memberRepository;
+    private final NewsFeedRepository newsFeedRepository;
 
     public CommentResponse saveComment(CommentAddRequest request) {
         Optional<Member> findMember = memberRepository.findById(request.getMemberId());
-        findMember.orElseThrow(NullPointerException::new);
+        findMember.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The member was not found"));
         Member member = findMember.get();
 
-        Optional<NewsFeed> findNewsFeed = newsFeedRepository.findByid(request.getNewsfeedId());
-        findNewsFeed.orElseThrow(NullPointerException::new);
+        Optional<NewsFeed> findNewsFeed = newsFeedRepository.findById(request.getNewsfeedId());
+        findNewsFeed.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This post was not found"));
 
         NewsFeed newsFeed = findNewsFeed.get();
 
@@ -38,22 +40,22 @@ public class CommentService {
 
     public CommentResponse updateComment(Long id, CommentUpdateRequest request) {
         Optional<Comment> findComment = commentRepository.findById(id);
-        findComment.orElseThrow(NullPointerException::new);
+        findComment.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such comment found"));
 
 
         Comment comment = findComment.get();
         comment.update(request);
 
-        Comment c = commentRepository.save(comment);
+        Comment savedComment = commentRepository.save(comment);
 
-        return new CommentResponse(c);
+        return new CommentResponse(savedComment);
     }
 
 
     public void delete(Long id) {
         Optional<Comment> findComment = commentRepository.findById(id);
 
-        findComment.orElseThrow(NullPointerException::new);
+        findComment.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such comment found"));
 
         commentRepository.deleteById(id);
     }

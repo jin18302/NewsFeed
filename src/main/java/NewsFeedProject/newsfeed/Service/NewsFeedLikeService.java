@@ -11,16 +11,16 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
+
 @Service
 @RequiredArgsConstructor
 public class NewsFeedLikeService {
-
     private final NewsFeedLikeRepository newsFeedLikeRepository;
-    private final NewsFeedRePository newsFeedRePository;
+    private final NewsFeedRepository newsFeedRepository;
     private final MemberRepository memberRepository;
 
     public NewsFeedLikeResponse saveLike(NewsFeedLikeRequest request) {
-        Optional<NewsFeed> findNewsFeed = newsFeedRePository.findById(request.getNewsfeedId());
+        Optional<NewsFeed> findNewsFeed = newsFeedRepository.findById(request.getNewsfeedId());
 
         findNewsFeed.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This post was not found"));
 
@@ -29,15 +29,15 @@ public class NewsFeedLikeService {
 
         Optional<Member> findMember = memberRepository.findById(request.getMemberId());
 
-        findMember.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"The member was not found"));
+        findMember.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The member was not found"));
 
         Member member = findMember.get();
 
-      Optional <NewsFeedLike> liked = newsFeedLikeRepository.findByMemberAndNewsFeed(request.getMemberId(), request.getNewsfeedId());
+        Optional<NewsFeedLike> liked = newsFeedLikeRepository.findByMemberAndNewsFeed(member, newsFeed);
 
-      if(!liked.isEmpty()){
-          //이미 좋아요룰 누른상태라면 예외를 발생시킬지, 취소처리할지
-      }
+        if (!liked.isEmpty()) {
+            //이미 좋아요룰 누른상태라면 예외를 발생시킬지, 취소처리할지
+        }
 
         NewsFeedLike like = new NewsFeedLike(member, newsFeed);
 

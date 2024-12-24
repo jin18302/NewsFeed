@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 public class NewsFeedLikeResponse {
-    private Long id;
+    private final Long id;
 
     public NewsFeedLikeResponse(NewsFeedLike like){
         this.id = like.getId();

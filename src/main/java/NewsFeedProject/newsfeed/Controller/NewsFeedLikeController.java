@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/newsfeed/like")
+@RequestMapping("/newsfeeds/likes")
 @RequiredArgsConstructor
 public class NewsFeedLikeController {
 

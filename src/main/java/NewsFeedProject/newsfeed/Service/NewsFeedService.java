@@ -4,12 +4,13 @@ import NewsFeedProject.newsfeed.dto.NewsFeedRequestDto;
 import NewsFeedProject.newsfeed.dto.NewsFeedResponseDto;
 import NewsFeedProject.newsfeed.entity.NewsFeed;
 import NewsFeedProject.newsfeed.repository.NewsFeedRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Optional;
+//import java.util.List;
 
 @Service
 public class NewsFeedService {
@@ -20,65 +21,44 @@ public class NewsFeedService {
         this.newsFeedRepository = newsFeedRepository;
     }
 
-    public NewsFeedResponseDto save(String title, String contents) {
+    public NewsFeedResponseDto create(String title, String contents) {
 
         NewsFeed newsFeed = new NewsFeed(title, contents);
 
         NewsFeed saveNewsFeed = newsFeedRepository.save(newsFeed);
 
-        return new NewsFeedResponseDto(saveNewsFeed.getId(), saveNewsFeed.getTitle(), saveNewsFeed.getContents(), saveNewsFeed.getCreateAt(), saveNewsFeed.getModifiedAt());
-
+        return toDto(newsFeed);
     }
 
-    public List<NewsFeedResponseDto> findAll() {
-
-        return newsFeedRepository.findAll()
-                .stream()
-                .map(NewsFeedResponseDto::toDto)
-                .toList();
-
+    public Page<NewsFeed> getNewsFeed(Pageable pageable) {
+        Page<NewsFeed> newsFeedPageList = newsFeedRepository.findAllByOrderByCreatedAtDesc(pageable);
+        return newsFeedPageList;
     }
 
-    public NewsFeedResponseDto findById(Long id) {
-
-        Optional<NewsFeed> optionalNewsFeed = newsFeedRepository.findById(id);
-
-        if (optionalNewsFeed.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exists id = " + id);
-        }
-        NewsFeed findNewsFeed = optionalNewsFeed.get();
-
-        return new NewsFeedResponseDto(findNewsFeed.getId(), findNewsFeed.getTitle(), findNewsFeed.getContents(), findNewsFeed.getCreateAt(), findNewsFeed.getModifiedAt());
-
-    }
-
-    public void delete(Long id) {
-        NewsFeed findNewsFeed = newsFeedRepository.findByIdOrElseThrow(id);
-
-        newsFeedRepository.delete(findNewsFeed);
+    public NewsFeedResponseDto getNewsFeedById(Long id) {
+        NewsFeed newsFeed = findNewsFeedById(id);
+        return toDto(newsFeed);
     }
 
     public NewsFeedResponseDto update(Long id, NewsFeedRequestDto requestDto) {
 
-        NewsFeed newsFeed = newsFeedRepository.findByIdOrElseThrow(id);
+        NewsFeed newsFeed = findNewsFeedById(id);
         newsFeed.updateNewsFeed(requestDto);
         newsFeedRepository.save(newsFeed);
 
-        return new NewsFeedResponseDto(newsFeed.getId(), newsFeed.getTitle(), newsFeed.getContents(), newsFeed.getCreateAt(), newsFeed.getModifiedAt());
-
+        return toDto(newsFeed);
     }
 
+    public void delete(Long id) {
+        newsFeedRepository.deleteById(id);
+    }
 
-//    public NewsFeedResponseDto update(Long id, NewsFeedRequestDto requestDto) {
-//
-//        NewsFeed newsFeed = newsFeedRepository.findByIdOrElseThrow(id);
-//        newsFeed.updateNewsFeed(requestDto);
-//        newsFeedRepository.save(newsFeed);
-//
-//        return toDto(newsFeed);
-//    }
+    private NewsFeed findNewsFeedById(Long id) {
+        return newsFeedRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exists id" + id));
+    }
 
-//    private NewsFeedResponseDto toDto(NewsFeed newsFeed) {
-//        return NewsFeedResponseDto.toDto(newsFeed);
-//    }
+    private NewsFeedResponseDto toDto(NewsFeed newsFeed) {
+        return NewsFeedResponseDto.toDto(newsFeed);
+    }
 }

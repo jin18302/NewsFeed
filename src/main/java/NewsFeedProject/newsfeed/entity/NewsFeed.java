@@ -26,9 +26,13 @@ public class NewsFeed {
     @Column(columnDefinition = "longtext")
     private String contents;
 
+//    @ManyToMany
+//    @JoinColumn()
+//    private Member member;
+
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;

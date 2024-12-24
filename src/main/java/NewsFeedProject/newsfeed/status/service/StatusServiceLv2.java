@@ -35,7 +35,7 @@ public class StatusServiceLv2 {
         UserEntity receivceUserById = findUserByReceiveId(dto);
 
         // 중복 방지
-        if(statusRepository.findBySendUserAndReceiveUser(receivceUserById ,userEntity) == null) {
+        if(!statusRepository.findBySendUserAndReceiveUser(receivceUserById ,userEntity).isEmpty()  ) { // && !statusRepository.findBySendUserAndReceiveUser(userEntity ,receivceUserById).isEmpty()
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,"이미 상대방이 팔로우 한 상태입니다. 요청을 수락 혹은 거절 하세요"); // 전제 조건 실패의 상태메세지
         }
 
@@ -76,15 +76,25 @@ public class StatusServiceLv2 {
         UserEntity receivceUserById = findUserByReceiveId(dto);
         log.info("send user : {}",receivceUserById);
 
-        Optional<StatusLv2> bySendUserAndReceiveUser = statusRepository.findBySendUserAndReceiveUser(userEntity ,receivceUserById);
 
-        StatusLv2 findStatusLv2 = bySendUserAndReceiveUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        //
+        if(statusRepository.findBySendUserAndReceiveUser(userEntity ,receivceUserById).isEmpty()) {
+            StatusLv2 statusLv2 = statusRepository.findBySendUserAndReceiveUser(receivceUserById, userEntity)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        findStatusLv2.setStatusvalue(dto.getStatusvalue());
+            statusLv2.setStatusvalue(dto.getStatusvalue());
 
-        log.info("db data : {}",findStatusLv2);
 
-        return new StatusResponseDto(userEntity,receivceUserById,findStatusLv2.getStatusvalue());
+            return new StatusResponseDto(statusLv2.getReceiveUser(),statusLv2.getSendUser(),statusLv2.getStatusvalue());
+        }
+
+        StatusLv2 statusLv2 = statusRepository.findBySendUserAndReceiveUser(userEntity, receivceUserById)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+
+        statusLv2.setStatusvalue(dto.getStatusvalue());
+
+        return new StatusResponseDto(statusLv2.getSendUser(),statusLv2.getReceiveUser(),statusLv2.getStatusvalue());
     }
 
     @Transactional
@@ -132,6 +142,7 @@ public class StatusServiceLv2 {
                 // if accept 일때 추가해야함 아니면 v2 를 만들까?
                 if(!value.getSendUser().equals(userEntity)) {
                     statusList.add(new StatusResponseDto(value.getReceiveUser(),value.getSendUser(), value.getStatusvalue()));
+                    continue; //
                 }
                 statusList.add(new StatusResponseDto(value.getSendUser(), value.getReceiveUser(), value.getStatusvalue()));
         }
@@ -159,6 +170,7 @@ public class StatusServiceLv2 {
                 // if accept 일때 추가해야함 아니면 v2 를 만들까?
                 if(!value.getSendUser().equals(userEntity)) {
                     statusList.add(new StatusResponseDto(value.getReceiveUser(),value.getSendUser(), value.getStatusvalue()));
+                    continue; //
                 }
                 statusList.add(new StatusResponseDto(value.getSendUser(), value.getReceiveUser(), value.getStatusvalue()));
             }
@@ -198,18 +210,22 @@ public class StatusServiceLv2 {
         //
         Optional<UserEntity> byEmail = userRepository.findByEmail(UserOfEmail);
         // byEmail.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)); // 생략 - 로그인 기능에 포함
-
         UserEntity userEntity = byEmail.get();
 
-        Map<Long, StatusLv2> byReceiveUserAndSendUser = statusRepository.findByReceiveUserAndSendUser(userEntity);
+        UserEntity receiveUser = userRepository.findById(receiveId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        StatusLv2 statusLv2 = byReceiveUserAndSendUser.get(0);
 
-        //
-        if(statusLv2.getStatusvalue().equals(StatusValue.acceptance)) {
-            return new StatusResponseDto(statusLv2.getSendUser(),statusLv2.getReceiveUser(),statusLv2.getStatusvalue());
-         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        if(!statusRepository.findBySendUserAndReceiveUser(userEntity, receiveUser).isEmpty() || !statusRepository.findBySendUserAndReceiveUser(receiveUser ,userEntity).isEmpty()) {
+            Optional<StatusLv2> bySendUserAndReceiveUserCase1 = statusRepository.findBySendUserAndReceiveUser(userEntity, receiveUser);
+            Optional<StatusLv2> bySendUserAndReceiveUserCase2 = statusRepository.findBySendUserAndReceiveUser(receiveUser, userEntity);
+            if(!bySendUserAndReceiveUserCase1.isEmpty()) {
+                StatusLv2 findStatusLv2 = bySendUserAndReceiveUserCase1.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+              return new StatusResponseDto(findStatusLv2.getSendUser(),findStatusLv2.getReceiveUser(),findStatusLv2.getStatusvalue());
+            } else {
+                StatusLv2 findStatusLv2 = bySendUserAndReceiveUserCase2.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                return new StatusResponseDto(findStatusLv2.getReceiveUser(),findStatusLv2.getSendUser(),findStatusLv2.getStatusvalue());
+            }
+
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND,"해당 관계를 찾을 수 없습니다.");
     }
 }

@@ -1,5 +1,6 @@
 package NewsFeedProject.newsfeed.Service;
 
+import NewsFeedProject.newsfeed.dto.NewsFeedPageResponseDto;
 import NewsFeedProject.newsfeed.dto.NewsFeedRequestDto;
 import NewsFeedProject.newsfeed.dto.NewsFeedResponseDto;
 import NewsFeedProject.newsfeed.entity.NewsFeed;
@@ -30,9 +31,9 @@ public class NewsFeedService {
         return toDto(newsFeed);
     }
 
-    public Page<NewsFeed> getNewsFeed(Pageable pageable) {
-        Page<NewsFeed> newsFeedPageList = newsFeedRepository.findAllByOrderByCreatedAtDesc(pageable);
-        return newsFeedPageList;
+    public Page<NewsFeedPageResponseDto> getPaginatedNewsFeeds(Pageable pageable){
+        Page<NewsFeedPageResponseDto> newsFeeds = newsFeedRepository.findAllWithPagination(pageable);
+        return newsFeeds;
     }
 
     public NewsFeedResponseDto getNewsFeedById(Long id) {

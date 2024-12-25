@@ -1,6 +1,6 @@
-package NewsFeedProject.newsfeed.memberbranch.dto;
+package NewsFeedProject.memberbranch.dto;
 
-import NewsFeedProject.newsfeed.memberbranch.entity.Member;
+import NewsFeedProject.memberbranch.entity.Member;
 import lombok.Getter;
 
 @Getter

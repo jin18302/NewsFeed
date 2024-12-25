@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.memberbranch.dto;
+package NewsFeedProject.memberbranch.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

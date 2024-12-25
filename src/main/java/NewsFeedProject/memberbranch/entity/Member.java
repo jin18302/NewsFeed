@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.memberbranch.entity;
+package NewsFeedProject.memberbranch.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

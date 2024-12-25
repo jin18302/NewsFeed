@@ -1,6 +1,6 @@
-package NewsFeedProject.newsfeed.memberbranch.repository;
+package NewsFeedProject.memberbranch.repository;
 
-import NewsFeedProject.newsfeed.memberbranch.entity.Member;
+import NewsFeedProject.memberbranch.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

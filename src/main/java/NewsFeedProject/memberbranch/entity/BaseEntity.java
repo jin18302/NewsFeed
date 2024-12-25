@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.memberbranch.entity;
+package NewsFeedProject.memberbranch.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

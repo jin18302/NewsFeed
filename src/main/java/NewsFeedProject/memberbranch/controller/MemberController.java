@@ -1,8 +1,8 @@
-package NewsFeedProject.newsfeed.memberbranch.controller;
+package NewsFeedProject.memberbranch.controller;
 
-import NewsFeedProject.newsfeed.dto.*;
+import NewsFeedProject.memberbranch.dto.*;
 import NewsFeedProject.newsfeed.memberbranch.dto.*;
-import NewsFeedProject.newsfeed.memberbranch.service.MemberService;
+import NewsFeedProject.memberbranch.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.memberbranch.service;
+package NewsFeedProject.memberbranch.service;
 
 import org.springframework.stereotype.Service;
 

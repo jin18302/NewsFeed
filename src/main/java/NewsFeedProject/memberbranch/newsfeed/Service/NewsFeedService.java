@@ -1,9 +1,9 @@
-package NewsFeedProject.newsfeed.Service;
+package NewsFeedProject.memberbranch.newsfeed.Service;
 
-import NewsFeedProject.newsfeed.dto.NewsFeedRequestDto;
-import NewsFeedProject.newsfeed.dto.NewsFeedResponseDto;
-import NewsFeedProject.newsfeed.entity.NewsFeed;
-import NewsFeedProject.newsfeed.repository.NewsFeedRepository;
+import NewsFeedProject.memberbranch.newsfeed.dto.NewsFeedRequestDto;
+import NewsFeedProject.memberbranch.newsfeed.dto.NewsFeedResponseDto;
+import NewsFeedProject.memberbranch.newsfeed.entity.NewsFeed;
+import NewsFeedProject.memberbranch.newsfeed.repository.NewsFeedRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

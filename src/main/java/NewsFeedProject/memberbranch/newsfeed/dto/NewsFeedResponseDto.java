@@ -1,6 +1,6 @@
-package NewsFeedProject.newsfeed.dto;
+package NewsFeedProject.memberbranch.newsfeed.dto;
 
-import NewsFeedProject.newsfeed.entity.NewsFeed;
+import NewsFeedProject.memberbranch.newsfeed.entity.NewsFeed;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -1,9 +1,9 @@
-package NewsFeedProject.newsfeed.controller;
+package NewsFeedProject.memberbranch.newsfeed.controller;
 
-import NewsFeedProject.newsfeed.Service.NewsFeedService;
-import NewsFeedProject.newsfeed.dto.NewsFeedRequestDto;
-import NewsFeedProject.newsfeed.dto.NewsFeedResponseDto;
-import NewsFeedProject.newsfeed.entity.NewsFeed;
+import NewsFeedProject.memberbranch.newsfeed.Service.NewsFeedService;
+import NewsFeedProject.memberbranch.newsfeed.dto.NewsFeedRequestDto;
+import NewsFeedProject.memberbranch.newsfeed.dto.NewsFeedResponseDto;
+import NewsFeedProject.memberbranch.newsfeed.entity.NewsFeed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -1,10 +1,10 @@
-package NewsFeedProject.newsfeed.Service;
+package NewsFeedProject.memberbranch.newsfeed.Service;
 
-import NewsFeedProject.newsfeed.Dto.CommentAddRequest;
-import NewsFeedProject.newsfeed.Dto.CommentResponse;
-import NewsFeedProject.newsfeed.Dto.CommentUpdateRequest;
-import NewsFeedProject.newsfeed.Entity.Comment;
-import NewsFeedProject.newsfeed.Repository.CommentRepository;
+import NewsFeedProject.memberbranch.newsfeed.dto.CommentAddRequest;
+import NewsFeedProject.memberbranch.newsfeed.dto.CommentResponse;
+import NewsFeedProject.memberbranch.newsfeed.dto.CommentUpdateRequest;
+import NewsFeedProject.memberbranch.newsfeed.entity.Comment;
+import NewsFeedProject.memberbranch.newsfeed.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

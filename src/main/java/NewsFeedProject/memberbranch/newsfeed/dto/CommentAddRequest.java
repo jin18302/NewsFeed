@@ -1,6 +1,5 @@
-package NewsFeedProject.newsfeed.Dto;
+package NewsFeedProject.memberbranch.newsfeed.dto;
 
-import NewsFeedProject.newsfeed.Entity.Comment;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

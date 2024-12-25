@@ -1,6 +1,6 @@
-package NewsFeedProject.newsfeed.repository;
+package NewsFeedProject.memberbranch.newsfeed.repository;
 
-import NewsFeedProject.newsfeed.entity.NewsFeed;
+import NewsFeedProject.memberbranch.newsfeed.entity.NewsFeed;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

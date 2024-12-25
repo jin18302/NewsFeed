@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.dto;
+package NewsFeedProject.memberbranch.newsfeed.dto;
 
 import lombok.Getter;
 

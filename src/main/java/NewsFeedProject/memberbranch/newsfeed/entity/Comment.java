@@ -1,6 +1,6 @@
-package NewsFeedProject.newsfeed.Entity;
+package NewsFeedProject.memberbranch.newsfeed.entity;
 
-import NewsFeedProject.newsfeed.Dto.CommentUpdateRequest;
+import NewsFeedProject.memberbranch.newsfeed.dto.CommentUpdateRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

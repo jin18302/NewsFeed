@@ -1,6 +1,6 @@
-package NewsFeedProject.newsfeed.entity;
+package NewsFeedProject.memberbranch.newsfeed.entity;
 
-import NewsFeedProject.newsfeed.dto.NewsFeedRequestDto;
+import NewsFeedProject.memberbranch.newsfeed.dto.NewsFeedRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

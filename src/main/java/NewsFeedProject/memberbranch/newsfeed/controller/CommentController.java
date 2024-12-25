@@ -1,10 +1,10 @@
-package NewsFeedProject.newsfeed.Controller;
+package NewsFeedProject.memberbranch.newsfeed.controller;
 
 
-import NewsFeedProject.newsfeed.Dto.CommentAddRequest;
-import NewsFeedProject.newsfeed.Dto.CommentResponse;
-import NewsFeedProject.newsfeed.Dto.CommentUpdateRequest;
-import NewsFeedProject.newsfeed.Service.CommentService;
+import NewsFeedProject.memberbranch.newsfeed.dto.CommentAddRequest;
+import NewsFeedProject.memberbranch.newsfeed.dto.CommentResponse;
+import NewsFeedProject.memberbranch.newsfeed.dto.CommentUpdateRequest;
+import NewsFeedProject.memberbranch.newsfeed.Service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

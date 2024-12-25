@@ -1,6 +1,6 @@
-package NewsFeedProject.newsfeed.Repository;
+package NewsFeedProject.memberbranch.newsfeed.repository;
 
-import NewsFeedProject.newsfeed.Entity.Comment;
+import NewsFeedProject.memberbranch.newsfeed.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

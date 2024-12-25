@@ -2,7 +2,7 @@ package NewsFeedProject.newsfeed.config;
 
 
 import NewsFeedProject.newsfeed.filter.JwtFliter;
-import NewsFeedProject.newsfeed.jwt.JwtTokenProvider;
+import NewsFeedProject.newsfeed.filter.JwtTokenProvider;
 import jakarta.servlet.Filter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

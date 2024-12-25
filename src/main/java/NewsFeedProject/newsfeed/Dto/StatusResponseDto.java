@@ -1,6 +1,6 @@
-package NewsFeedProject.newsfeed.status.dto;
+package NewsFeedProject.newsfeed.Dto;
 
-import NewsFeedProject.newsfeed.status.entity.StatusValue;
+import NewsFeedProject.newsfeed.Entity.StatusValue;
 import NewsFeedProject.newsfeed.user.UserEntity;
 import lombok.Getter;
 import lombok.ToString;

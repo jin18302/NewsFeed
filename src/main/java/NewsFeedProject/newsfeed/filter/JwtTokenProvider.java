@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.jwt;
+package NewsFeedProject.newsfeed.filter;
 
 
 import io.jsonwebtoken.Claims;

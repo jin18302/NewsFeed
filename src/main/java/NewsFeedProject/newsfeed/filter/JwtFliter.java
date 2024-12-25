@@ -1,6 +1,5 @@
 package NewsFeedProject.newsfeed.filter;
 
-import NewsFeedProject.newsfeed.jwt.JwtTokenProvider;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;

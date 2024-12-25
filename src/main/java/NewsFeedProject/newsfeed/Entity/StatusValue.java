@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.status.entity;
+package NewsFeedProject.newsfeed.Entity;
 
 //import jakarta.persistence.EntityListeners; // 필요 없다!
 

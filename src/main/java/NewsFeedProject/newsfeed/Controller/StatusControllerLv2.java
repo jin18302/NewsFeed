@@ -1,10 +1,10 @@
-package NewsFeedProject.newsfeed.status.controller;
+package NewsFeedProject.newsfeed.Controller;
 
 
-import NewsFeedProject.newsfeed.jwt.JwtTokenProvider;
-import NewsFeedProject.newsfeed.status.dto.StatausRequestDto;
-import NewsFeedProject.newsfeed.status.dto.StatusResponseDto;
-import NewsFeedProject.newsfeed.status.service.StatusServiceLv2;
+import NewsFeedProject.newsfeed.filter.JwtTokenProvider;
+import NewsFeedProject.newsfeed.Dto.StatausRequestDto;
+import NewsFeedProject.newsfeed.Dto.StatusResponseDto;
+import NewsFeedProject.newsfeed.Service.StatusServiceLv2;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

@@ -1,6 +1,6 @@
-package NewsFeedProject.newsfeed.status.repository;
+package NewsFeedProject.newsfeed.Repository;
 
-import NewsFeedProject.newsfeed.status.entity.StatusLv2;
+import NewsFeedProject.newsfeed.Entity.StatusLv2;
 import NewsFeedProject.newsfeed.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;

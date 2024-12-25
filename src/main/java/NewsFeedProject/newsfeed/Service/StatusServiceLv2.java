@@ -1,10 +1,10 @@
-package NewsFeedProject.newsfeed.status.service;
+package NewsFeedProject.newsfeed.Service;
 
-import NewsFeedProject.newsfeed.status.dto.StatausRequestDto;
-import NewsFeedProject.newsfeed.status.dto.StatusResponseDto;
-import NewsFeedProject.newsfeed.status.entity.StatusLv2;
-import NewsFeedProject.newsfeed.status.entity.StatusValue;
-import NewsFeedProject.newsfeed.status.repository.StatusRepositoryLv2;
+import NewsFeedProject.newsfeed.Dto.StatausRequestDto;
+import NewsFeedProject.newsfeed.Dto.StatusResponseDto;
+import NewsFeedProject.newsfeed.Entity.StatusLv2;
+import NewsFeedProject.newsfeed.Entity.StatusValue;
+import NewsFeedProject.newsfeed.Repository.StatusRepositoryLv2;
 import NewsFeedProject.newsfeed.user.UserEntity;
 import NewsFeedProject.newsfeed.user.UserRepository;
 import jakarta.transaction.Transactional;

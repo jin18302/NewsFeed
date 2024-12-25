@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.status.entity;
+package NewsFeedProject.newsfeed.Entity;
 
 
 import NewsFeedProject.newsfeed.user.UserEntity;

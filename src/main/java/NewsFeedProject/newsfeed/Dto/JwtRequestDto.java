@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.jwt;
+package NewsFeedProject.newsfeed.Dto;
 
 
 import lombok.AllArgsConstructor;

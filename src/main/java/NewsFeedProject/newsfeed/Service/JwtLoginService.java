@@ -1,6 +1,7 @@
-package NewsFeedProject.newsfeed.jwt;
+package NewsFeedProject.newsfeed.Service;
 
 
+import NewsFeedProject.newsfeed.filter.JwtTokenProvider;
 import NewsFeedProject.newsfeed.user.UserEntity;
 import NewsFeedProject.newsfeed.user.UserRepository;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @AllArgsConstructor
-public class JwtService {
+public class JwtLoginService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;

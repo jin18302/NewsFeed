@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.login;
+package NewsFeedProject.newsfeed.jwt;
 
 
 import lombok.AllArgsConstructor;
@@ -6,12 +6,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class LoginRequestDto {
+public class JwtRequestDto {
 
     private String email;
 
     private String password;
 
-    public LoginRequestDto() {
+    public JwtRequestDto() {
     }
 }

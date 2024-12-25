@@ -1,34 +1,43 @@
 package NewsFeedProject.newsfeed.status.controller;
 
 
+import NewsFeedProject.newsfeed.jwt.JwtTokenProvider;
 import NewsFeedProject.newsfeed.status.dto.StatausRequestDto;
 import NewsFeedProject.newsfeed.status.dto.StatusResponseDto;
 import NewsFeedProject.newsfeed.status.service.StatusServiceLv2;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("lv2/statuses")
 @AllArgsConstructor
 public class StatusControllerLv2 {
 
     private final StatusServiceLv2 statusService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping
-    public ResponseEntity<Void> createSingleStatus(HttpServletRequest request,
+    public ResponseEntity<Void> createSingleStatus(@RequestHeader("Authorization") String authorization,
                                                    @RequestBody StatausRequestDto dto) {
 
-        HttpSession session = request.getSession();
-        Map attribute = (Map) session.getAttribute("session");
-        String UserOfEmail = (String)attribute.get("email");
+        log.info("Authorization token : " + authorization);
 
-        return ResponseEntity.ok(statusService.createSingleStatus(dto,UserOfEmail));
+        String token = authorization.substring(7);
+
+        Claims claims = jwtTokenProvider.validateToken(token);
+
+        String email = claims.getSubject();
+
+        return ResponseEntity.ok(statusService.createSingleStatus(dto,email));
     }
 
     @PatchMapping ("/{sendUserId}")

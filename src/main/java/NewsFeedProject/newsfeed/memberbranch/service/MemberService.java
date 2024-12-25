@@ -1,12 +1,12 @@
-package NewsFeedProject.newsfeed.service;
+package NewsFeedProject.newsfeed.memberbranch.service;
 
 
-import NewsFeedProject.newsfeed.config.PasswordEncoder;
-import NewsFeedProject.newsfeed.dto.MemberResponseDto;
-import NewsFeedProject.newsfeed.dto.MemberSimpleResponseDto;
-import NewsFeedProject.newsfeed.dto.MemberUpdateResponseDto;
-import NewsFeedProject.newsfeed.entity.Member;
-import NewsFeedProject.newsfeed.repository.MemberRepository;
+import NewsFeedProject.newsfeed.memberbranch.config.PasswordEncoder;
+import NewsFeedProject.newsfeed.memberbranch.dto.MemberResponseDto;
+import NewsFeedProject.newsfeed.memberbranch.dto.MemberSimpleResponseDto;
+import NewsFeedProject.newsfeed.memberbranch.dto.MemberUpdateResponseDto;
+import NewsFeedProject.newsfeed.memberbranch.entity.Member;
+import NewsFeedProject.newsfeed.memberbranch.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

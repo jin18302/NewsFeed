@@ -1,4 +1,4 @@
-package NewsFeedProject.newsfeed.config;
+package NewsFeedProject.newsfeed.memberbranch.config;
 
 
 import at.favre.lib.crypto.bcrypt.BCrypt;

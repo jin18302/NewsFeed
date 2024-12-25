@@ -1,6 +1,6 @@
-package NewsFeedProject.newsfeed.dto;
+package NewsFeedProject.newsfeed.memberbranch.dto;
 
-import NewsFeedProject.newsfeed.entity.Member;
+import NewsFeedProject.newsfeed.memberbranch.entity.Member;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

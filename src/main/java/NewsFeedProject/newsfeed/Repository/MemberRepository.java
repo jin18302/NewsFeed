@@ -15,7 +15,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByEmail(String email);
 
-    default Member findByEmailOrElseThrow(String email) {
+    default Member findByEmailOrElseThrow(String email) { //Todo 사용하는 게 없어서 만듬 , 로그인 햇을 당시 용으로
         return findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 사용중인 이메일 입니다"));
     }
 

@@ -7,31 +7,32 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class MemberRequestDto {
+public class MemberRequestDto { //Todo 바꾼 부분 필드명에 final 을 빼고, 역직렬화를 위해 생성자 생성
 
     //이름 이메일 패스워드 생년월일 닉네임 소개
 
     @NotBlank
-    private final String name;
+    private String name;
 
     @NotBlank
     @Email
-    private final String email;
+    private String email;
 
     @NotBlank
     @Size(min = 8)
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]+$",
             message = "영문 대소문자, 숫자, 특수문자를 각각 최소 1글자씩 포함해야 합니다.")
-    private final String password;
+    private String password;
 
     @NotBlank
-    private final String birthdate;
+    private String birthdate;
 
     @NotBlank
-    private final String nickname;
+    private String nickname;
 
 
-    private final String comment;
+    private String comment;
+
 
 
     public MemberRequestDto(String name, String email, String password, String birthdate, String nickname, String comment) {
@@ -41,6 +42,8 @@ public class MemberRequestDto {
         this.birthdate = birthdate;
         this.nickname = nickname;
         this.comment = comment;
+    }
+    public MemberRequestDto() { //Todo 생성자 생성
     }
 
 

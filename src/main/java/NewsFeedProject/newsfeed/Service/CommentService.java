@@ -4,7 +4,11 @@ import NewsFeedProject.newsfeed.Dto.CommentAddRequest;
 import NewsFeedProject.newsfeed.Dto.CommentResponse;
 import NewsFeedProject.newsfeed.Dto.CommentUpdateRequest;
 import NewsFeedProject.newsfeed.Entity.Comment;
+import NewsFeedProject.newsfeed.Entity.Member;
+import NewsFeedProject.newsfeed.Entity.NewsFeed;
 import NewsFeedProject.newsfeed.Repository.CommentRepository;
+import NewsFeedProject.newsfeed.Repository.MemberRepository;
+import NewsFeedProject.newsfeed.Repository.NewsFeedRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,7 @@ public class CommentService {
     private final NewsFeedRepository newsFeedRepository;
 
     public CommentResponse saveComment(CommentAddRequest request) {
+
         Optional<Member> findMember = memberRepository.findById(request.getMemberId());
         findMember.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The member was not found"));
         Member member = findMember.get();
@@ -38,25 +43,43 @@ public class CommentService {
 
     }
 
-    public CommentResponse updateComment(Long id, CommentUpdateRequest request) {
+    public CommentResponse updateComment(Long id, CommentUpdateRequest request, String email) {
+
+        Member member = memberRepository.findByEmail(email).get();//Todo 로그인 된거라 orelsethrow 생략
+
         Optional<Comment> findComment = commentRepository.findById(id);
         findComment.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such comment found"));
-
-
         Comment comment = findComment.get();
-        comment.update(request);
 
-        Comment savedComment = commentRepository.save(comment);
+        if(comment.getMember()==member) {
 
-        return new CommentResponse(savedComment);
+            comment.update(request);
+
+            Comment savedComment = commentRepository.save(comment);
+
+            return new CommentResponse(savedComment);
+
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"사용자 권한이 없습니다");
+        }
     }
 
 
-    public void delete(Long id) {
+    public void delete(Long id, String email) {
+
+
+        Member member = memberRepository.findByEmail(email).get();//Todo 로그인 된거라 orelsethrow 생략
+
         Optional<Comment> findComment = commentRepository.findById(id);
 
         findComment.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such comment found"));
 
-        commentRepository.deleteById(id);
+        if(findComment.get().getMember()==member) {
+
+            commentRepository.deleteById(id);
+
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"사용자 권한이 없습니다");
+        }
     }
 }

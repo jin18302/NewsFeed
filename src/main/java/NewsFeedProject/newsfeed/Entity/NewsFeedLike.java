@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "newfeedlikes")
 @NoArgsConstructor
-public class NewsFeedLike {
+public class NewsFeedLike extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

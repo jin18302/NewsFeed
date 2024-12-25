@@ -8,13 +8,16 @@ import lombok.Getter;
 public class PasswordRequestDto {
 
     @NotBlank
-    private final String oldPassword;
+    private  String oldPassword;
 
     @NotBlank
-    private final String newPassword;
+    private  String newPassword;
 
     public PasswordRequestDto(String oldPassword, String newPassword) {
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
+    }
+
+    public PasswordRequestDto() { //Todo
     }
 }

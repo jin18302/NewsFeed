@@ -67,9 +67,11 @@ public class MemberService {
 
     }
 
-    public MemberUpdateResponseDto updateMember(Long id, String nickname, String comment, String password) {
+    public MemberUpdateResponseDto updateMember(String email, String nickname, String comment, String password) {
 
-        Member findMember = memberRepository.findByIdOrElseThrow(id);
+        //Member findMember = memberRepository.findByIdOrElseThrow(id); //Todo 변경사항
+
+        Member findMember = memberRepository.findByEmail(email).get();//- 인증 된거라 orelsethrow 생략
 
         if (!passwordEncoder.matches(password, findMember.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
@@ -85,9 +87,11 @@ public class MemberService {
 
     }
 
-    public void updatePassword(Long id, String oldPassword, String newPassword) {
+    public void updatePassword(String email, String oldPassword, String newPassword) {
 
-        Member findMember = memberRepository.findByIdOrElseThrow(id);
+        //Member findMember = memberRepository.findByIdOrElseThrow(id);
+
+        Member findMember = memberRepository.findByEmail(email).get();
 
         if (oldPassword.equals(newPassword)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "같은 비밀번호는 사용할 수 없습니다.");

@@ -2,8 +2,12 @@ package NewsFeedProject.newsfeed.Service;
 
 import NewsFeedProject.newsfeed.Dto.NewsFeedLikeRequest;
 import NewsFeedProject.newsfeed.Dto.NewsFeedLikeResponse;
+import NewsFeedProject.newsfeed.Entity.Member;
+import NewsFeedProject.newsfeed.Entity.NewsFeed;
 import NewsFeedProject.newsfeed.Entity.NewsFeedLike;
+import NewsFeedProject.newsfeed.Repository.MemberRepository;
 import NewsFeedProject.newsfeed.Repository.NewsFeedLikeRepository;
+import NewsFeedProject.newsfeed.Repository.NewsFeedRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -50,9 +54,16 @@ public class NewsFeedLikeService {
 
 
     @Transactional
-    public void deleteLike(Long id) {
-        newsFeedLikeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 좋아요가 존재하지 않습니다"));
+    public void deleteLike(Long id, String email) {
 
-        newsFeedLikeRepository.deleteById(id);
+        Member member = memberRepository.findByEmail(email).get();//Todo 로그인 된거라 orelsethrow 생략
+
+        NewsFeedLike newsFeedLike = newsFeedLikeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 좋아요가 존재하지 않습니다"));
+
+        if(newsFeedLike.getMember()==member) {
+            newsFeedLikeRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"사용자 권한이 없습니다");
+        }
     }
 }

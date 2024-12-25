@@ -7,5 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NewsFeedRepository extends JpaRepository<NewsFeed, Long> {
 
-    Page<NewsFeed> findAllByOrderByCreatedAtDesc(Pageable pageable);
+    //Page<NewsFeed> findAllByOrderByCreatedAtDesc(Pageable pageable);  // TODO 바꾼 부분
+
+    Page<NewsFeed> findAllByOrderByCreatedDateDesc(Pageable pageable);
 }

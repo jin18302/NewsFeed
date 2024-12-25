@@ -2,8 +2,11 @@ package NewsFeedProject.newsfeed.Service;
 
 import NewsFeedProject.newsfeed.Dto.NewsFeedRequestDto;
 import NewsFeedProject.newsfeed.Dto.NewsFeedResponseDto;
+import NewsFeedProject.newsfeed.Entity.Member;
 import NewsFeedProject.newsfeed.Entity.NewsFeed;
+import NewsFeedProject.newsfeed.Repository.MemberRepository;
 import NewsFeedProject.newsfeed.Repository.NewsFeedRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,17 +16,18 @@ import org.springframework.web.server.ResponseStatusException;
 //import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class NewsFeedService {
 
     private final NewsFeedRepository newsFeedRepository;
+    private final MemberRepository memberRepository;
 
-    public NewsFeedService(NewsFeedRepository newsFeedRepository) {
-        this.newsFeedRepository = newsFeedRepository;
-    }
 
-    public NewsFeedResponseDto create(String title, String contents) {
+    public NewsFeedResponseDto create(String title, String contents,String email) {
 
-        NewsFeed newsFeed = new NewsFeed(title, contents);
+        Member member = memberRepository.findByEmail(email).get(); //
+
+        NewsFeed newsFeed = new NewsFeed(title, contents, member);
 
         NewsFeed saveNewsFeed = newsFeedRepository.save(newsFeed);
 
@@ -31,7 +35,7 @@ public class NewsFeedService {
     }
 
     public Page<NewsFeed> getNewsFeed(Pageable pageable) {
-        Page<NewsFeed> newsFeedPageList = newsFeedRepository.findAllByOrderByCreatedAtDesc(pageable);
+        Page<NewsFeed> newsFeedPageList = newsFeedRepository.findAllByOrderByCreatedDateDesc(pageable);
         return newsFeedPageList;
     }
 
@@ -40,17 +44,32 @@ public class NewsFeedService {
         return toDto(newsFeed);
     }
 
-    public NewsFeedResponseDto update(Long id, NewsFeedRequestDto requestDto) {
+    public NewsFeedResponseDto update(Long id, NewsFeedRequestDto requestDto, String email) {
+
+        Member member = memberRepository.findByEmail(email).get();//Todo 로그인 된거라 orelsethrow 생략
 
         NewsFeed newsFeed = findNewsFeedById(id);
-        newsFeed.updateNewsFeed(requestDto);
-        newsFeedRepository.save(newsFeed);
+        if(newsFeed.getMember()==member) {
+            newsFeed.updateNewsFeed(requestDto);
+            newsFeedRepository.save(newsFeed);
 
-        return toDto(newsFeed);
+            return toDto(newsFeed);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"사용자 권한이 없습니다");
+        }
     }
 
-    public void delete(Long id) {
-        newsFeedRepository.deleteById(id);
+    public void delete(Long id,String email) {
+
+        Member member = memberRepository.findByEmail(email).get();//Todo 로그인 된거라 orelsethrow 생략
+
+        NewsFeed newsFeed = findNewsFeedById(id);
+        if(newsFeed.getMember()==member) {
+            newsFeedRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"사용자 권한이 없습니다");
+        }
+
     }
 
     private NewsFeed findNewsFeedById(Long id) {

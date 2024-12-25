@@ -20,7 +20,7 @@ public class CommentResponse {
     public CommentResponse(Comment comment){
         this.id = comment.getId();
         this.content = comment.getContent();
-        this.createAt = comment.getCreatAt();
-        this.updateAt = comment.getUpdateAt();
+        this.createAt = comment.getCreatedDate();
+        this.updateAt = comment.getUpdatedDate();
     }
 }

@@ -1,7 +1,7 @@
 package NewsFeedProject.newsfeed.Dto;
 
+import NewsFeedProject.newsfeed.Entity.Member;
 import NewsFeedProject.newsfeed.Entity.StatusValue;
-import NewsFeedProject.newsfeed.user.UserEntity;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -10,21 +10,26 @@ import lombok.ToString;
 @ToString
 public class StatusResponseDto {
 
-    private UserEntity sendUser;
+    private Member sendMember;
 
-    private UserEntity receiveUser;
+    private Member receiveMember;
 
     private StatusValue statusValue;
 
-    public StatusResponseDto(UserEntity sendUser, UserEntity receiveUser, StatusValue statusValue) {
-        this.sendUser = sendUser;
-        this.receiveUser = receiveUser;
+    public StatusResponseDto(Member receiveMember, StatusValue statusValue) {
+        this.receiveMember = receiveMember;
         this.statusValue = statusValue;
     }
 
-    public StatusResponseDto(UserEntity sendUser, UserEntity receiveUser) {
-        this.sendUser = sendUser;
-        this.receiveUser = receiveUser;
+    public StatusResponseDto(Member sendMember, Member receiveMember, StatusValue statusValue) {
+        this.sendMember = sendMember;
+        this.receiveMember = receiveMember;
+        this.statusValue = statusValue;
+    }
+
+    public StatusResponseDto(Member sendMember, Member receiveMember) {
+        this.sendMember = sendMember;
+        this.receiveMember = receiveMember;
     }
 }
 

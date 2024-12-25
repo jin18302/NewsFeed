@@ -23,12 +23,15 @@ public class JwtFliter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String requestURI = request.getRequestURI();
         // 1. 로그인/회원가입 URI 체크 개선
-        if (requestURI.startsWith("/login") || requestURI.startsWith("/users")) {
+
+        log.info("uri :"+requestURI);
+        if (requestURI.startsWith("/login") || requestURI.startsWith("/members/signup")) {
             filterChain.doFilter(servletRequest, servletResponse);
+            log.info("test");
             return;
         }
         String token = request.getHeader("Authorization");
-        log.info("Authorization token : {}", token); // 로그 형식 개선
+        log.info("Authorization token :"+ token); // 로그 형식 개선
         // 2. 토큰 검증 로직 개선
         if (token == null || !token.startsWith("Bearer ")) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authorization header is missing or invalid.");

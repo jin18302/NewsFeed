@@ -1,9 +1,10 @@
 package NewsFeedProject.newsfeed.Service;
 
 
+import NewsFeedProject.newsfeed.Entity.Member;
+import NewsFeedProject.newsfeed.Repository.MemberRepository;
+import NewsFeedProject.newsfeed.config.PasswordEncoder;
 import NewsFeedProject.newsfeed.filter.JwtTokenProvider;
-import NewsFeedProject.newsfeed.user.UserEntity;
-import NewsFeedProject.newsfeed.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,18 +14,19 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor
 public class JwtLoginService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
     public String login(String email, String password) {
 
-        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if(!userEntity.getPassword().equals(password)) {
+        if(!passwordEncoder.matches(password, member.getPassword())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        return jwtTokenProvider.createToken(userEntity.getEmail(), userEntity.getUserName());
+        return jwtTokenProvider.createToken(member.getEmail(), member.getName());
     }
 
 }

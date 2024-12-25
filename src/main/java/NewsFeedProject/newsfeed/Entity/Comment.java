@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name="comment")
+@Table(name="newsfeedcomment")
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Comment {
+//@EntityListeners(AuditingEntityListener.class)
+public class Comment extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,12 +23,6 @@ public class Comment {
 
     @Column
     private String content;
-
-    @CreatedDate
-    private LocalDateTime creatAt;
-
-    @LastModifiedDate
-    private LocalDateTime updateAt;
 
     @ManyToOne
     @JoinColumn(name = "newsfeed_id")

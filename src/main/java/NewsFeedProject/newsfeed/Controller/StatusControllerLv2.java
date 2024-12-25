@@ -8,6 +8,7 @@ import NewsFeedProject.newsfeed.Service.StatusServiceLv2;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class StatusControllerLv2 {
 
     @PostMapping
     public ResponseEntity<Void> createSingleStatus(@RequestHeader("Authorization") String authorization,
-                                                   @RequestBody StatausRequestDto dto) {
+                                                   @Valid @RequestBody StatausRequestDto dto) {
 
         log.info("Authorization token : " + authorization);
 
@@ -41,62 +42,77 @@ public class StatusControllerLv2 {
     }
 
     @PatchMapping ("/{sendUserId}")
-    public ResponseEntity<StatusResponseDto> setPairStatus(HttpServletRequest request,
-                                                            @RequestBody StatausRequestDto dto) {
+    public ResponseEntity<StatusResponseDto> setPairStatus(@RequestHeader("Authorization") String authorization,
+                                                            @Valid @RequestBody StatausRequestDto dto) {
 
-        HttpSession session = request.getSession();
-        Map attribute = (Map) session.getAttribute("session");
-        String UserOfEmail = (String)attribute.get("email");
+        log.info("Authorization token : " + authorization);
 
-        return ResponseEntity.ok(statusService.setPairStatus(dto,UserOfEmail));
+        String token = authorization.substring(7);
+
+        Claims claims = jwtTokenProvider.validateToken(token);
+
+        String email = claims.getSubject();
+
+        return ResponseEntity.ok(statusService.setPairStatus(dto,email));
     }
 
     @GetMapping
-    public ResponseEntity<List<StatusResponseDto>> findAllStatus(HttpServletRequest request) {
+    public ResponseEntity<List<StatusResponseDto>> findAllStatus(@RequestHeader("Authorization") String authorization) {
 
-        HttpSession session = request.getSession();
-        Map attribute = (Map) session.getAttribute("session");
-        String UserOfEmail = (String)attribute.get("email");
+        log.info("Authorization token : " + authorization);
 
+        String token = authorization.substring(7);
 
-        return ResponseEntity.ok(statusService.findAllStatus(UserOfEmail));
+        Claims claims = jwtTokenProvider.validateToken(token);
+
+        String email = claims.getSubject();
+
+        return ResponseEntity.ok(statusService.findAllStatus(email));
     }
 
     // 수락한 친구 모두 조회
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<StatusResponseDto>> findAcceptanceStatus(HttpServletRequest request) {
+    public ResponseEntity<List<StatusResponseDto>> findAcceptanceStatus(@RequestHeader("Authorization") String authorization) {
 
-        HttpSession session = request.getSession();
-        Map attribute = (Map) session.getAttribute("session");
-        String UserOfEmail = (String)attribute.get("email");
+        log.info("Authorization token : " + authorization);
 
+        String token = authorization.substring(7);
 
-        return ResponseEntity.ok(statusService.findAcceptanceStatus(UserOfEmail));
+        Claims claims = jwtTokenProvider.validateToken(token);
+
+        String email = claims.getSubject();
+
+        return ResponseEntity.ok(statusService.findAcceptanceStatus(email));
     }
 
     @GetMapping("/{receiveUserId}")
-    public ResponseEntity<StatusResponseDto> findByEmailStatus(HttpServletRequest request,
-                                                               @PathVariable("receiveUserId") Long id) {
+    public ResponseEntity<StatusResponseDto> findByEmailStatus(@RequestHeader("Authorization") String authorization,
+                                                               @Valid @RequestBody StatausRequestDto dto) {
 
+        log.info("Authorization token : " + authorization);
 
-        HttpSession session = request.getSession();
-        Map attribute = (Map) session.getAttribute("session");
-        String UserOfEmail = (String)attribute.get("email");
+        String token = authorization.substring(7);
 
-        return ResponseEntity.ok(statusService.findByEmailStatus(id,UserOfEmail));
+        Claims claims = jwtTokenProvider.validateToken(token);
+
+        String email = claims.getSubject();
+
+        return ResponseEntity.ok(statusService.findByEmailStatus(dto,email));
     }
 
     @DeleteMapping("/{receiveUserId}")
-    public ResponseEntity<Void> deleteStatus(HttpServletRequest request,
-                                             @RequestBody StatausRequestDto dto) {
+    public ResponseEntity<Void> deleteStatus(@RequestHeader("Authorization") String authorization,
+                                             @Valid @RequestBody StatausRequestDto dto) {
 
+        log.info("Authorization token : " + authorization);
 
-        HttpSession session = request.getSession();
-        Map attribute = (Map) session.getAttribute("session");
-        String UserOfEmail = (String)attribute.get("email");
+        String token = authorization.substring(7);
 
+        Claims claims = jwtTokenProvider.validateToken(token);
 
-        statusService.deleteStatus(dto,UserOfEmail);
+        String email = claims.getSubject();
+
+        statusService.deleteStatus(dto,email);
 
         return ResponseEntity.noContent().build();
     }

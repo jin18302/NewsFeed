@@ -24,8 +24,8 @@ public class NewsFeedResponseDto {
         return new NewsFeedResponseDto(newsFeed.getId(),
                 newsFeed.getTitle(),
                 newsFeed.getContents(),
-                newsFeed.getCreatedAt(),
-                newsFeed.getModifiedAt()
+                newsFeed.getCreatedDate(),
+                newsFeed.getUpdatedDate()
         );
     }
 }

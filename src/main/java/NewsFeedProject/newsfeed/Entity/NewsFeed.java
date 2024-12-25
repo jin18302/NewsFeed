@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @Table(name = "newsfeed")
-@EntityListeners(AuditingEntityListener.class)
-public class NewsFeed {
+//@EntityListeners(AuditingEntityListener.class)
+public class NewsFeed extends BaseEntity {
 
     @Getter
     @Id
@@ -26,22 +26,17 @@ public class NewsFeed {
     @Column(columnDefinition = "longtext")
     private String contents;
 
-//    @ManyToMany
-//    @JoinColumn()
-//    private Member member;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;
 
     public NewsFeed() {}
 
-    public NewsFeed(String title, String contents) {
+    public NewsFeed(String title, String contents,Member member) {
         this.title = title;
         this.contents = contents;
+        this.member = member;
     }
 
     public void updateNewsFeed(NewsFeedRequestDto requestDto) {

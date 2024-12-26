@@ -45,8 +45,8 @@ public class NewsFeedController {
 
     @GetMapping
     public  ResponseEntity<Page<NewsFeedPageResponseDto>> getPaginatedPosts(
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "1") int pageNumber)
+            @RequestParam(name = "pageSize" , defaultValue = "10") int pageSize,
+            @RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber)
     {
         Pageable pageable = PageRequest.of(pageNumber-1, pageSize);
         Page<NewsFeedPageResponseDto> newsfeeds = newsFeedService.getPaginatedNewsFeeds(pageable);

@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,6 +64,15 @@ public class CommentService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"사용자 권한이 없습니다");
         }
     }
+
+    public List<CommentResponse> findByNewsFeedId(Long newsFeedId) {
+        List<Comment> findComments = commentRepository.findCommentByNewsFeedId(newsFeedId);
+
+        List<CommentResponse> comments = findComments.stream().map(CommentResponse::new).toList();
+
+        return comments;
+    }
+
 
 
     public void delete(Long id, String email) {

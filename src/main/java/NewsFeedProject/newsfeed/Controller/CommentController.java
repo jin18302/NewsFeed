@@ -13,22 +13,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/comments")
+@RequestMapping("/newsfeeds/comments")
 public class CommentController {
 
     private final CommentService service;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<CommentResponse> addComment(@Valid @RequestBody CommentAddRequest request){
       CommentResponse response =  service.saveComment(request);
 
       return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-   @PatchMapping ("/{commentid}")
+    @GetMapping("/{newsfeedid}")
+    public ResponseEntity<List<CommentResponse>> findByNewsFeedId(@PathVariable(name = "newsfeedid")Long newsFeedId){
+        List<CommentResponse> comments = service.findByNewsFeedId(newsFeedId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(comments);
+    }
+
+
+    @PatchMapping ("/{commentid}")
     public ResponseEntity<CommentResponse> updateComment(@RequestHeader("Authorization") String authorization,
                                                          @PathVariable("commentid") Long id, @Valid @RequestBody  CommentUpdateRequest request){ //Todo
 

@@ -20,8 +20,9 @@ public class NewsFeedLikeController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping
-    public ResponseEntity<NewsFeedLikeResponse> saveLike(@RequestBody NewsFeedLikeRequest request){ //Todo requestDto 에 memberid 지울지
-       NewsFeedLikeResponse response = newsFeedLikeService.saveLike(request);
+    public ResponseEntity<NewsFeedLikeResponse> saveLike(@PathVariable (name = "memberid")Long memberId,
+                                                         @PathVariable(name = "newsfeedId")Long newsFeedId){
+       NewsFeedLikeResponse response = newsFeedLikeService.saveLike(memberId, newsFeedId);
        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

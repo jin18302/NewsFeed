@@ -25,15 +25,15 @@ public class NewsFeedLikeService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public NewsFeedLikeResponse saveLike(NewsFeedLikeRequest request) {
-        Optional<NewsFeed> findNewsFeed = newsFeedRepository.findById(request.getNewsfeedId());
+    public NewsFeedLikeResponse saveLike(Long memberId, Long newsFeedId) {
+        Optional<NewsFeed> findNewsFeed = newsFeedRepository.findById(newsFeedId);
 
         findNewsFeed.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 게시글은 존재하지 않습니다"));
 
         NewsFeed newsFeed = findNewsFeed.get();
 
 
-        Optional<Member> findMember = memberRepository.findById(request.getMemberId());
+        Optional<Member> findMember = memberRepository.findById(memberId);
 
         findMember.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 멤버는 존재하지 않습니다"));
 
@@ -56,7 +56,7 @@ public class NewsFeedLikeService {
     @Transactional
     public void deleteLike(Long id, String email) {
 
-        Member member = memberRepository.findByEmail(email).get();//Todo 로그인 된거라 orelsethrow 생략
+        Member member = memberRepository.findByEmail(email).get();
 
         NewsFeedLike newsFeedLike = newsFeedLikeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 좋아요가 존재하지 않습니다"));
 

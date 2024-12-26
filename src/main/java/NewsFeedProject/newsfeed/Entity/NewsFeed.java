@@ -30,6 +30,14 @@ public class NewsFeed extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime modifiedAt;
+
+
 
     public NewsFeed() {}
 

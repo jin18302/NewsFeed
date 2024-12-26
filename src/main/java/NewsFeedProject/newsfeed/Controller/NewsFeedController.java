@@ -1,5 +1,6 @@
 package NewsFeedProject.newsfeed.Controller;
 
+import NewsFeedProject.newsfeed.Dto.NewsFeedPageResponseDto;
 import NewsFeedProject.newsfeed.Service.NewsFeedService;
 import NewsFeedProject.newsfeed.Dto.NewsFeedRequestDto;
 import NewsFeedProject.newsfeed.Dto.NewsFeedResponseDto;
@@ -43,12 +44,15 @@ public class NewsFeedController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<NewsFeed>> getNewsFeed( // Todo 이건 몰라서 생략
+    public  ResponseEntity<Page<NewsFeedPageResponseDto>> getPaginatedPosts(
             @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "1") int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
-        return new ResponseEntity<>(newsFeedService.getNewsFeed(pageable), HttpStatus.OK);
+            @RequestParam(defaultValue = "1") int pageNumber)
+    {
+        Pageable pageable = PageRequest.of(pageNumber-1, pageSize);
+        Page<NewsFeedPageResponseDto> newsfeeds = newsFeedService.getPaginatedNewsFeeds(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(newsfeeds);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<NewsFeedResponseDto> getNewsFeedById(@PathVariable("id") Long id) { //Todo

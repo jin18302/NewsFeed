@@ -1,8 +1,6 @@
 package NewsFeedProject.newsfeed.Controller;
 
-import NewsFeedProject.newsfeed.Dto.NewsFeedLikeRequest;
 import NewsFeedProject.newsfeed.Dto.NewsFeedLikeResponse;
-import NewsFeedProject.newsfeed.Entity.NewsFeedLike;
 import NewsFeedProject.newsfeed.Service.NewsFeedLikeService;
 import NewsFeedProject.newsfeed.filter.JwtTokenProvider;
 import io.jsonwebtoken.Claims;

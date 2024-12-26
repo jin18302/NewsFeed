@@ -1,6 +1,5 @@
 package NewsFeedProject.newsfeed.Service;
 
-import NewsFeedProject.newsfeed.Dto.NewsFeedLikeRequest;
 import NewsFeedProject.newsfeed.Dto.NewsFeedLikeResponse;
 import NewsFeedProject.newsfeed.Entity.Member;
 import NewsFeedProject.newsfeed.Entity.NewsFeed;

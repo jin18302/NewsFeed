@@ -17,7 +17,7 @@ public class NewsFeedLikeController {
     private final NewsFeedLikeService newsFeedLikeService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @PostMapping
+    @PostMapping("/{memberid}/{newsfeedid}")
     public ResponseEntity<NewsFeedLikeResponse> saveLike(@PathVariable (name = "memberid")Long memberId,
                                                          @PathVariable(name = "newsfeedid")Long newsFeedId){
        NewsFeedLikeResponse response = newsFeedLikeService.saveLike(memberId, newsFeedId);

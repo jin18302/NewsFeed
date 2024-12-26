@@ -19,7 +19,7 @@ public class NewsFeedLikeController {
 
     @PostMapping
     public ResponseEntity<NewsFeedLikeResponse> saveLike(@PathVariable (name = "memberid")Long memberId,
-                                                         @PathVariable(name = "newsfeedId")Long newsFeedId){
+                                                         @PathVariable(name = "newsfeedid")Long newsFeedId){
        NewsFeedLikeResponse response = newsFeedLikeService.saveLike(memberId, newsFeedId);
        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
